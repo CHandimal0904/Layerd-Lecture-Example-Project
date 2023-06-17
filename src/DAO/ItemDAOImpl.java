@@ -16,9 +16,9 @@ public class ItemDAOImpl {
         while (rst.next()){
             String code = rst.getString(1);
             String description = rst.getString(2);
-            String unitPrice = rst.getString(3);
-            BigDecimal qtyOnHand = BigDecimal.valueOf(rst.getInt(4));
-            allItem.add(new ItemDTO(code,description,unitPrice,qtyOnHand));
+            int unitPrice = rst.getInt(3);
+            BigDecimal qtyOnHand = rst.getBigDecimal(4);
+            allItem.add(new ItemDTO(code,description, qtyOnHand, unitPrice));
         }
         return allItem;
     }
@@ -36,6 +36,15 @@ public class ItemDAOImpl {
         pstm.setBigDecimal(3, item.getUnitPrice());
         pstm.setInt(4, item.getQtyOnHand());
         return pstm.executeUpdate() >0;
+    }
+    public boolean updateItem(ItemDTO dto) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
+        pstm.setString(1, dto.getCode());
+        pstm.setString(2, dto.getDescription());
+        pstm.setBigDecimal(3, dto.getUnitPrice());
+        pstm.setInt(4, dto.getQtyOnHand());
+        return pstm.executeUpdate() > 0;
     }
 
 }
