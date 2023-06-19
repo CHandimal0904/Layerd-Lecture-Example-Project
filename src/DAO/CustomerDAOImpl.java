@@ -28,11 +28,12 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
     @Override
     public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("SELECT id FROM Customer WHERE id=?",id);
+        ResultSet rst = SQLUtil.executeQuery("SELECT id FROM Customer WHERE id=?", id);
+        return rst.next();
     }
     @Override
     public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate("DELETE FROM Customer WHERE id=?",id)
+        return SQLUtil.executeUpdate("DELETE FROM Customer WHERE id=?",id);
     }
     @Override
     public String genarateNewId() throws SQLException, ClassNotFoundException {
