@@ -1,0 +1,107 @@
+[33mcommit f8deb233275f03422d42f6ec719da896ed30c81d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Mon Jun 19 11:18:09 2023 +0530
+
+    CustomerDAOImpl ful refactor with High Choshion
+
+[33mcommit bd0cacab5ab26094d78808b74d7c2a13c7f637bf[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Mon Jun 19 10:44:34 2023 +0530
+
+    CustomerDAOImpl ful refactor with High Choshion
+
+[33mcommit bd3c5b317dbc0bce58785c269bc14da976835f66[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Mon Jun 19 10:16:18 2023 +0530
+
+    Create SQLUtill calss to solve chohition
+
+[33mcommit 82a9a15331808f185e2fee0e624f07967c54f1c2[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sun Jun 18 13:27:01 2023 +0530
+
+    Dipendancy injection in ManageItemFormController (property injection)
+
+[33mcommit d06f989716235da09d2944125e04dabe0185442f[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sun Jun 18 13:21:07 2023 +0530
+
+    Dipendancy injection in ManageCustomerFormController (property injection)
+
+[33mcommit 0c5edefbf8cd391c091a42450262bfdf8a448aac[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sun Jun 18 12:47:48 2023 +0530
+
+    Full loos coupling ItemDAO
+
+[33mcommit 2e6221c3195b9434163f825c630bfaa88343d3c8[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sun Jun 18 06:07:50 2023 +0530
+
+    Loos COupling 1st step
+
+[33mcommit 9001cabe5c1c53549777669b328c7c7f64ffa096[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 15:56:45 2023 +0530
+
+    Complete refactor ItemDAOImpl
+
+[33mcommit 8a96421963e706e5afe85fe1582097d131928f76[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 12:28:41 2023 +0530
+
+    refactor update Item to ItemDAOImpl
+
+[33mcommit c8089826b6c5f6039dcfea30a8c6b116e1e11313[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 11:38:35 2023 +0530
+
+    refactor saveitem to ItemDAOImpl
+
+[33mcommit d21fac976282d9ecd31e85cb60748039cb52e8b6[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 11:31:20 2023 +0530
+
+    refactor get all and delete to ItemDAOImpl
+
+[33mcommit 42997293088e012a343d7eb1a94784814b7448a6[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 10:59:43 2023 +0530
+
+    genrate new Id  refactor with Layerd
+
+[33mcommit 05eb9f8a8ae09cf238962c72f51bebad824d7355[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 10:52:50 2023 +0530
+
+    customer delete refactor with Layerd
+
+[33mcommit 178c6edfc03356956171e61a8a85bd91fb19f05c[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 10:43:29 2023 +0530
+
+    existcustomer update with layerd
+
+[33mcommit 65d9f085ae8645c7c8d45cc54a18dd203f0b3b4b[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 09:26:48 2023 +0530
+
+    Update customer refactor DAO with MVC to Layerd
+
+[33mcommit c75d7eb24677a4137ac17b059680e2d99ca2a2d6[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 09:19:12 2023 +0530
+
+    add save customer to DAOImpl
+
+[33mcommit 5df3b9ef3106faee18ee1343bea9d7049db53451[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 08:59:03 2023 +0530
+
+    Create CustomerDao
+
+[33mcommit 724f737d56db5f058bc900e92a072870ef1c2459[m
+Author: Chandimal <chandimalnimantha1119@gmail.com>
+Date:   Sat Jun 17 08:10:32 2023 +0530
+
+    MVC project Before refactor

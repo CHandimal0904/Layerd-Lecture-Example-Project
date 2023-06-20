@@ -6,9 +6,10 @@ import model.ItemDTO;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-public class ItemDAOImpl implements ItemDAO{
+public class ItemDAOImpl implements CRUDDAO<ItemDTO,String>{
+
     @Override
-    public ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException {
+    public ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item");
         ArrayList<ItemDTO> allItem = new ArrayList<>();
         while (rst.next()){
@@ -21,19 +22,29 @@ public class ItemDAOImpl implements ItemDAO{
         return allItem;
     }
     @Override
-    public boolean deleteItem(String code) throws SQLException, ClassNotFoundException {
+    public boolean delete(String code) throws SQLException, ClassNotFoundException {
          return SQLUtil.executeUpdate("DELETE FROM Item WHERE code=?", code);
     }
     @Override
-    public boolean saveItem(ItemDTO item) throws SQLException, ClassNotFoundException {
+    public boolean save(ItemDTO item) throws SQLException, ClassNotFoundException {
         return SQLUtil.executeUpdate("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)",item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand());
     }
     @Override
-    public boolean updateItem(ItemDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean update(ItemDTO dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.executeUpdate("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?",dto.getDescription(),dto.getUnitPrice(),dto.getQtyOnHand(),dto.getCode());
     }
+
     @Override
-    public boolean existItem(String code) throws SQLException, ClassNotFoundException {
+    public ItemDTO Search(String code) throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Item WHERE code=?", code);
+        if (rst.next()){
+            return new ItemDTO(rst.getString(1),rst.getString(2),rst.getBigDecimal(3),rst.getInt(4));
+        }
+            return null;
+    }
+
+    @Override
+    public boolean exist(String code) throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT code FROM Item WHERE code=?", code);
         return  rst.next();
 
