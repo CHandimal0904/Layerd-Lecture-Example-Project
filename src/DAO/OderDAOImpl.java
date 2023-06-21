@@ -1,11 +1,12 @@
 package DAO;
 
+import db.DBConnection;
 import model.OrderDTO;
 
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
-public class PlaceOderDAOImpl implements CRUDDAO<OrderDTO, String>  {
+public class OderDAOImpl implements CRUDDAO<OrderDTO, String>  {
     public void searchCustomer(){
 
     }
@@ -17,7 +18,7 @@ public class PlaceOderDAOImpl implements CRUDDAO<OrderDTO, String>  {
 
     @Override
     public boolean save(OrderDTO dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return SQLUtil.executeUpdate("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)",dto.getOrderId(),dto.getOrderDate(),dto.getCustomerName());
     }
 
     @Override
@@ -31,8 +32,8 @@ public class PlaceOderDAOImpl implements CRUDDAO<OrderDTO, String>  {
     }
 
     @Override
-    public boolean exist(String s) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean exist(String oid) throws SQLException, ClassNotFoundException {
+           return SQLUtil.executeQuery("SELECT oid FROM `Orders` WHERE oid=?",oid).next();
     }
 
     @Override
@@ -42,6 +43,7 @@ public class PlaceOderDAOImpl implements CRUDDAO<OrderDTO, String>  {
 
     @Override
     public String genarateNewId() throws SQLException, ClassNotFoundException {
-        return null;
+        ResultSet rst = SQLUtil.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");
+        return rst.next() ? String.format("OID-%03d", (Integer.parseInt(rst.getString("oid").replace("OID-", "")) + 1)) : "OID-001";
     }
 }
