@@ -36,6 +36,10 @@ import java.util.stream.Collectors;
 
 
 public class PlaceOrderFormController {
+    CRUDDAO<ItemDTO,String> itemDAO = new ItemDAOImpl();
+    CRUDDAO<CustomerDTO,String>  customerDAO = new CustomerDAOImpl();
+    CRUDDAO<OrderDTO,String> oderDAO = new OderDAOImpl();
+    CRUDDAO<OrderDetailDTO,String> ordeDetailsDAO = new OrdeDetailsDAOImpl();
 
     public AnchorPane root;
     public JFXButton btnPlaceOrder;
@@ -52,7 +56,6 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
     private String orderId;
-
     public void initialize() throws SQLException, ClassNotFoundException {
 
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -134,9 +137,7 @@ public class PlaceOrderFormController {
                        //throw new NotFoundException("There is no such item associated with the id " + code);
                     }
 
-                    CRUDDAO<ItemDTO,String> itemDAO = new ItemDAOImpl();
                     ItemDTO item = itemDAO.Search(newItemCode + " ");
-
 
                     txtDescription.setText(item.getDescription());
                     txtUnitPrice.setText(item.getUnitPrice().setScale(2).toString());
@@ -160,7 +161,6 @@ public class PlaceOrderFormController {
         });
 
         tblOrderDetails.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, selectedOrderDetail) -> {
-
             if (selectedOrderDetail != null) {
                 cmbItemCode.setDisable(true);
                 cmbItemCode.setValue(selectedOrderDetail.getCode());
@@ -173,26 +173,21 @@ public class PlaceOrderFormController {
                 cmbItemCode.getSelectionModel().clearSelection();
                 txtQty.clear();
             }
-
         });
-
         loadAllCustomerIds();
         loadAllItemCodes();
     }
-
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        CRUDDAO<ItemDTO,String>  itemDAO = new ItemDAOImpl();
+
         return itemDAO.exist(code);
     }
-
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        CRUDDAO<CustomerDTO,String>  customerDAO = new CustomerDAOImpl();
+
         return customerDAO.exist(id);
     }
-
     public String generateNewOrderId() {
         try {
-            CRUDDAO<OrderDTO,String> oderDAO = new OderDAOImpl();
+
             return oderDAO.genarateNewId();
 
         } catch (SQLException e) {
@@ -202,25 +197,21 @@ public class PlaceOrderFormController {
         }
         return "OID-001";
     }
-
     private void loadAllCustomerIds() {
         try {
-            CRUDDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
             ArrayList<CustomerDTO> all = customerDAO.getAll();
             for (CustomerDTO customerDTO : all) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
             }
-
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to load customer ids").show();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-
     private void loadAllItemCodes() {
         try {
-            CRUDDAO<ItemDTO,String> itemDAO = new ItemDAOImpl();
+
             ArrayList<ItemDTO> all = itemDAO.getAll();
             for (ItemDTO dto : all) {
                 cmbItemCode.getItems().add(dto.getCode());
@@ -232,7 +223,6 @@ public class PlaceOrderFormController {
             e.printStackTrace();
         }
     }
-
     @FXML
     private void navigateToHome(MouseEvent event) throws IOException {
         URL resource = this.getClass().getResource("/view/main-form.fxml");
@@ -252,7 +242,6 @@ public class PlaceOrderFormController {
             txtQty.selectAll();
             return;
         }
-
         String itemCode = cmbItemCode.getSelectionModel().getSelectedItem();
         String description = txtDescription.getText();
         BigDecimal unitPrice = new BigDecimal(txtUnitPrice.getText()).setScale(2);
@@ -282,7 +271,6 @@ public class PlaceOrderFormController {
         calculateTotal();
         enableOrDisablePlaceOrderButton();
     }
-
     private void calculateTotal() {
         BigDecimal total = new BigDecimal(0);
 
@@ -291,7 +279,6 @@ public class PlaceOrderFormController {
         }
         lblTotal.setText("Total: " +total);
     }
-
     private void enableOrDisablePlaceOrderButton() {
         btnPlaceOrder.setDisable(!(cmbCustomerId.getSelectionModel().getSelectedItem() != null && !tblOrderDetails.getItems().isEmpty()));
     }
@@ -302,13 +289,11 @@ public class PlaceOrderFormController {
     public void btnPlaceOrder_OnAction(ActionEvent actionEvent) {
         boolean b = saveOrder(orderId, LocalDate.now(), cmbCustomerId.getValue(),
                 tblOrderDetails.getItems().stream().map(tm -> new OrderDetailDTO(tm.getCode(), tm.getQty(), tm.getUnitPrice())).collect(Collectors.toList()));
-
         if (b) {
             new Alert(Alert.AlertType.INFORMATION, "Order has been placed successfully").show();
         } else {
             new Alert(Alert.AlertType.ERROR, "Order has not been placed successfully").show();
         }
-
         orderId = generateNewOrderId();
         lblId.setText("Order Id: " + orderId);
         cmbCustomerId.getSelectionModel().clearSelection();
@@ -317,45 +302,31 @@ public class PlaceOrderFormController {
         txtQty.clear();
         calculateTotal();
     }
-
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         /*Transaction*/
         Connection connection = null;
         try {
-            CRUDDAO<OrderDTO,String> oderDAO = new OderDAOImpl();
             /*if order id already exist*/
             if ( oderDAO.exist(orderId)) {
             }
             connection.setAutoCommit(false);
-            CRUDDAO<OrderDTO,String> orderDAO = new OderDAOImpl();
-            boolean save = orderDAO.save(new OrderDTO(orderId, orderDate, customerId));
-
+            boolean save = oderDAO.save(new OrderDTO(orderId, orderDate, customerId));
             if (!save) {
                 connection.rollback();
                 connection.setAutoCommit(true);
                 return false;
             }
-
-//            stm = connection.prepareStatement("INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)");
-            CRUDDAO<OrderDetailDTO,String> ordeDetailsDAO = new OrdeDetailsDAOImpl();
-
             for (OrderDetailDTO detail : orderDetails) {
-//                stm.setString(1, orderId);
-//                stm.setString(2, detail.getItemCode());
-//                stm.setBigDecimal(3, detail.getUnitPrice());
-//                stm.setInt(4, detail.getQty());
                 boolean save1 = ordeDetailsDAO.save(detail);
                 if (save1) {
                     connection.rollback();
                     connection.setAutoCommit(true);
                     return false;
                 }
-
 //                //Search & Update Item
                 ItemDTO item = findItem(detail.getItemCode());
                 item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
-                CRUDDAO<ItemDTO, String> itemDAO = new ItemDAOImpl();
                 boolean update = itemDAO.update(new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
 
                 if (update) {
@@ -376,13 +347,9 @@ public class PlaceOrderFormController {
         }
         return false;
     }
-
-
     public ItemDTO findItem(String code) {
         try {
-            CRUDDAO<ItemDTO,String> itemDAO = new ItemDAOImpl();
             return itemDAO.Search(code);
-
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
         } catch (ClassNotFoundException e) {
@@ -390,6 +357,4 @@ public class PlaceOrderFormController {
         }
         return null;
     }
-
-
 }
