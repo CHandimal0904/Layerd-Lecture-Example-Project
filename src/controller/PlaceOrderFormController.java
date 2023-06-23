@@ -36,10 +36,10 @@ import java.util.stream.Collectors;
 
 
 public class PlaceOrderFormController {
-    CRUDDAO<ItemDTO,String> itemDAO = new ItemDAOImpl();
-    CRUDDAO<CustomerDTO,String>  customerDAO = new CustomerDAOImpl();
-    CRUDDAO<OrderDTO,String> oderDAO = new OderDAOImpl();
-    CRUDDAO<OrderDetailDTO,String> ordeDetailsDAO = new OrdeDetailsDAOImpl();
+    ItemDAO itemDAO = new ItemDAOImpl();
+    CustomerDAO  customerDAO = new CustomerDAOImpl();
+    OrderDAO oderDAO = new OderDAOImpl();
+    OrderDetailsDao ordeDetailsDAO = new OrdeDetailsDAOImpl();
 
     public AnchorPane root;
     public JFXButton btnPlaceOrder;

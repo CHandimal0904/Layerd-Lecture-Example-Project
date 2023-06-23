@@ -1,4 +1,6 @@
 package DAO;
 
-public interface ItemDAO {
+import model.ItemDTO;
+
+public interface ItemDAO extends CRUDDAO<ItemDTO,String> {
 }

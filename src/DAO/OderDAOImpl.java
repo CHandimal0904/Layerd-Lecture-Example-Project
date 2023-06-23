@@ -6,7 +6,7 @@ import model.OrderDTO;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class OderDAOImpl implements CRUDDAO<OrderDTO, String>  {
+public class OderDAOImpl implements OrderDAO  {
     public void searchCustomer(){
 
     }

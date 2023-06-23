@@ -1,4 +1,6 @@
 package DAO;
 
-public interface CustomerDAO {
+import model.CustomerDTO;
+
+public interface CustomerDAO extends CRUDDAO<CustomerDTO,String>{
 }
