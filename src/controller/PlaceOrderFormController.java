@@ -1,14 +1,8 @@
 package controller;
 
 import DAO.*;
-import DAO.Custom.CustomerDAO;
-import DAO.Custom.Impl.CustomerDAOImpl;
-import DAO.Custom.Impl.ItemDAOImpl;
-import DAO.Custom.Impl.OderDAOImpl;
-import DAO.Custom.Impl.OrdeDetailsDAOImpl;
-import DAO.Custom.ItemDAO;
-import DAO.Custom.OrderDAO;
-import DAO.Custom.OrderDetailsDao;
+import DAO.Custom.*;
+import DAO.Custom.Impl.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -47,6 +41,8 @@ public class PlaceOrderFormController {
     CustomerDAO customerDAO = new CustomerDAOImpl();
     OrderDAO oderDAO = new OderDAOImpl();
     OrderDetailsDao ordeDetailsDAO = new OrdeDetailsDAOImpl();
+
+    QuaryDao quaryDao = new QuaryDaoImpl();
 
     public AnchorPane root;
     public JFXButton btnPlaceOrder;
