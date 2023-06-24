@@ -37,12 +37,11 @@ import java.util.stream.Collectors;
 
 
 public class PlaceOrderFormController {
-    ItemDAO itemDAO = new ItemDAOImpl();
-    CustomerDAO customerDAO = new CustomerDAOImpl();
-    OrderDAO oderDAO = new OderDAOImpl();
-    OrderDetailsDao ordeDetailsDAO = new OrdeDetailsDAOImpl();
-
-    QuaryDao quaryDao = new QuaryDaoImpl();
+//    ItemDAO itemDAO = new ItemDAOImpl();
+//    CustomerDAO customerDAO = new CustomerDAOImpl();
+//    OrderDAO oderDAO = new OderDAOImpl();
+//    OrderDetailsDao ordeDetailsDAO = new OrdeDetailsDAOImpl();
+//    QuaryDao quaryDao = new QuaryDaoImpl();
 
     public AnchorPane root;
     public JFXButton btnPlaceOrder;
@@ -307,48 +306,49 @@ public class PlaceOrderFormController {
     }
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
         /*Transaction*/
-        Connection connection = null;
-        try {
-            /*if order id already exist*/
-            if ( oderDAO.exist(orderId)) {
-            }
-            connection.setAutoCommit(false);
-            boolean save = oderDAO.save(new OrderDTO(orderId, orderDate, customerId));
-            if (!save) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                return false;
-            }
-            for (OrderDetailDTO detail : orderDetails) {
-                boolean save1 = ordeDetailsDAO.save(detail);
-                if (save1) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    return false;
-                }
-//                //Search & Update Item
-                ItemDTO item = findItem(detail.getItemCode());
-                item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
+//        Connection connection = null;
+//        try {
+//            /*if order id already exist*/
+//            if ( oderDAO.exist(orderId)) {
+//            }
+//            connection.setAutoCommit(false);
+//            boolean save = oderDAO.save(new OrderDTO(orderId, orderDate, customerId));
+//            if (!save) {
+//                connection.rollback();
+//                connection.setAutoCommit(true);
+//                return false;
+//            }
+//            for (OrderDetailDTO detail : orderDetails) {
+//                boolean save1 = ordeDetailsDAO.save(detail);
+//                if (save1) {
+//                    connection.rollback();
+//                    connection.setAutoCommit(true);
+//                    return false;
+//                }
+////                //Search & Update Item
+//                ItemDTO item = findItem(detail.getItemCode());
+//                item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
+//
+//                boolean update = itemDAO.update(new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
+//
+//                if (update) {
+//                    connection.rollback();
+//                    connection.setAutoCommit(true);
+//                    return false;
+//                }
+//            }
+//
+//            connection.commit();
+//            connection.setAutoCommit(true);
+//            return true;
+//
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
 
-                boolean update = itemDAO.update(new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
-
-                if (update) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    return false;
-                }
-            }
-
-            connection.commit();
-            connection.setAutoCommit(true);
-            return true;
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
     public ItemDTO findItem(String code) {
         try {
