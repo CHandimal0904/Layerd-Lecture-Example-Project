@@ -1,5 +1,6 @@
 package controller;
 
+import BO.PurchaceOrderBOImpl;
 import DAO.*;
 import DAO.Custom.*;
 import DAO.Custom.Impl.*;
@@ -108,10 +109,12 @@ public class PlaceOrderFormController {
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-                        CRUDDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
-                       CustomerDTO search = customerDAO.Search(newValue + " ");
-
+//                        CRUDDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
+                        PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
+                        CustomerDTO search = purchaceOrderBO.searchCustomer(newValue + " ");
                         txtCustomerName.setText(search.getName());
+
+
                     } catch (SQLException e) {
                         new Alert(Alert.AlertType.ERROR, "Failed to find the customer " + newValue + "" + e).show();
                     }
@@ -305,50 +308,15 @@ public class PlaceOrderFormController {
         calculateTotal();
     }
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
-        /*Transaction*/
-//        Connection connection = null;
-//        try {
-//            /*if order id already exist*/
-//            if ( oderDAO.exist(orderId)) {
-//            }
-//            connection.setAutoCommit(false);
-//            boolean save = oderDAO.save(new OrderDTO(orderId, orderDate, customerId));
-//            if (!save) {
-//                connection.rollback();
-//                connection.setAutoCommit(true);
-//                return false;
-//            }
-//            for (OrderDetailDTO detail : orderDetails) {
-//                boolean save1 = ordeDetailsDAO.save(detail);
-//                if (save1) {
-//                    connection.rollback();
-//                    connection.setAutoCommit(true);
-//                    return false;
-//                }
-////                //Search & Update Item
-//                ItemDTO item = findItem(detail.getItemCode());
-//                item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
-//
-//                boolean update = itemDAO.update(new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
-//
-//                if (update) {
-//                    connection.rollback();
-//                    connection.setAutoCommit(true);
-//                    return false;
-//                }
-//            }
-//
-//            connection.commit();
-//            connection.setAutoCommit(true);
-//            return true;
-//
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-
+        PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
+        try {
+            return purchaceOrderBO.purchaceOrder(orderId,orderDate,customerId,orderDetails);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
     public ItemDTO findItem(String code) {
         try {
