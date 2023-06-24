@@ -1,10 +1,17 @@
 package controller;
 
 import DAO.*;
+import DAO.Custom.CustomerDAO;
+import DAO.Custom.Impl.CustomerDAOImpl;
+import DAO.Custom.Impl.ItemDAOImpl;
+import DAO.Custom.Impl.OderDAOImpl;
+import DAO.Custom.Impl.OrdeDetailsDAOImpl;
+import DAO.Custom.ItemDAO;
+import DAO.Custom.OrderDAO;
+import DAO.Custom.OrderDetailsDao;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import db.DBConnection;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -37,7 +44,7 @@ import java.util.stream.Collectors;
 
 public class PlaceOrderFormController {
     ItemDAO itemDAO = new ItemDAOImpl();
-    CustomerDAO  customerDAO = new CustomerDAOImpl();
+    CustomerDAO customerDAO = new CustomerDAOImpl();
     OrderDAO oderDAO = new OderDAOImpl();
     OrderDetailsDao ordeDetailsDAO = new OrdeDetailsDAOImpl();
 

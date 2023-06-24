@@ -1,8 +1,8 @@
 package controller;
 
 import DAO.CRUDDAO;
-import DAO.ItemDAO;
-import DAO.ItemDAOImpl;
+import DAO.Custom.ItemDAO;
+import DAO.Custom.Impl.ItemDAOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;

@@ -1,12 +1,13 @@
-package DAO;
+package DAO.Custom.Impl;
 
-import db.DBConnection;
+import DAO.Custom.OrderDAO;
+import DAO.SQLUtil;
 import model.OrderDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class OderDAOImpl implements OrderDAO  {
+public class OderDAOImpl implements OrderDAO {
     public void searchCustomer(){
 
     }

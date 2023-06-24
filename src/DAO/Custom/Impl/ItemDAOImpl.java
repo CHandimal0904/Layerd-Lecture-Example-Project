@@ -1,12 +1,13 @@
-package DAO;
+package DAO.Custom.Impl;
 
-import db.DBConnection;
+import DAO.Custom.ItemDAO;
+import DAO.SQLUtil;
 import model.ItemDTO;
 
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-public class ItemDAOImpl implements ItemDAO{
+public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException {
