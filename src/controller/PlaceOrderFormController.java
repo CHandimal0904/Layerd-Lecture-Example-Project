@@ -142,7 +142,8 @@ public class PlaceOrderFormController {
                        //throw new NotFoundException("There is no such item associated with the id " + code);
                     }
 
-                    ItemDTO item = itemDAO.Search(newItemCode + " ");
+                    PurchaceOrderBOImpl purchaceOrderBOFindItem = new PurchaceOrderBOImpl();
+                    ItemDTO item = purchaceOrderBOFindItem.searchItem(newItemCode + " ");
 
                     txtDescription.setText(item.getDescription());
                     txtUnitPrice.setText(item.getUnitPrice().setScale(2).toString());
@@ -183,17 +184,17 @@ public class PlaceOrderFormController {
         loadAllItemCodes();
     }
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-
-        return itemDAO.exist(code);
+        PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
+        return purchaceOrderBO.existItem(code);
     }
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-
-        return customerDAO.exist(id);
+        PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
+        return purchaceOrderBO.existCustomer(id);
     }
     public String generateNewOrderId() {
         try {
-
-            return oderDAO.genarateNewId();
+            PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
+            return purchaceOrderBO.genareteNewOrderId();
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new order id").show();
@@ -204,7 +205,8 @@ public class PlaceOrderFormController {
     }
     private void loadAllCustomerIds() {
         try {
-            ArrayList<CustomerDTO> all = customerDAO.getAll();
+            PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
+            ArrayList<CustomerDTO> all = purchaceOrderBO.getAllCustomers();
             for (CustomerDTO customerDTO : all) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
             }
@@ -217,7 +219,8 @@ public class PlaceOrderFormController {
     private void loadAllItemCodes() {
         try {
 
-            ArrayList<ItemDTO> all = itemDAO.getAll();
+            PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
+            ArrayList<ItemDTO> all = purchaceOrderBO.loadAllItemCodes();
             for (ItemDTO dto : all) {
                 cmbItemCode.getItems().add(dto.getCode());
             }
@@ -320,7 +323,9 @@ public class PlaceOrderFormController {
     }
     public ItemDTO findItem(String code) {
         try {
-            return itemDAO.Search(code);
+            PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
+            return purchaceOrderBO.searchItem(code);
+
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
         } catch (ClassNotFoundException e) {
