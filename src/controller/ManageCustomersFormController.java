@@ -1,6 +1,7 @@
 package controller;
 
 import BO.CustomerBOImpl;
+import BO.PurchaceOrderBOImpl;
 import DAO.CRUDDAO;
 import DAO.Custom.CustomerDAO;
 import DAO.Custom.Impl.CustomerDAOImpl;
@@ -148,8 +149,8 @@ public class ManageCustomersFormController {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
 
-
-                customerDAO.save(new CustomerDTO(id,name,address));
+                CustomerBOImpl customerBO = new CustomerBOImpl();
+                customerBO.saveCustomer(new CustomerDTO(id,name,address));
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
@@ -165,8 +166,8 @@ public class ManageCustomersFormController {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
-
-                customerDAO.update(new CustomerDTO(id,name,address));
+                CustomerBOImpl customerBO = new CustomerBOImpl();
+                customerBO.updateCustomer(new CustomerDTO(id,name,address));
 
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
@@ -185,8 +186,8 @@ public class ManageCustomersFormController {
 
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        CRUDDAO customerDAO = new CustomerDAOImpl();
-        return customerDAO.exist(id);
+        CustomerBOImpl customerBO = new CustomerBOImpl();
+        return customerBO.existCustomer(id);
     }
 
 
@@ -197,9 +198,8 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-            CRUDDAO customerDAO = new CustomerDAOImpl();
-            customerDAO.delete(id);
-
+            CustomerBOImpl customerBO = new CustomerBOImpl();
+            customerBO.deleteCustomer(id);
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();
             initUI();
@@ -213,9 +213,8 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-
-
-            return customerDAO.genarateNewId();
+            CustomerBOImpl customerBO = new CustomerBOImpl();
+            customerBO.genareteNewCustomerId();
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
