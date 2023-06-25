@@ -1,5 +1,6 @@
 package controller;
 
+import BO.CustomerBOImpl;
 import DAO.CRUDDAO;
 import DAO.Custom.CustomerDAO;
 import DAO.Custom.Impl.CustomerDAOImpl;
@@ -39,7 +40,7 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    private CustomerDAO customerDAO = new CustomerDAOImpl();
+
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tblCustomers.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -71,8 +72,9 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         /*Get all customers*/
         try {
+            CustomerBOImpl customerBO = new CustomerBOImpl();
+            ArrayList<CustomerDTO> allCustomer = customerBO.getAllCustomer();
 
-            ArrayList<CustomerDTO> allCustomer = customerDAO.getAll();
             for (CustomerDTO customer : allCustomer) {
                 tblCustomers.getItems().add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
             }
