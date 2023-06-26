@@ -1,6 +1,7 @@
 package controller;
 
 import BO.ItemBOImpl;
+import BO.ItemBo;
 import DAO.CRUDDAO;
 import DAO.Custom.ItemDAO;
 import DAO.Custom.Impl.ItemDAOImpl;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 
 
 public class ManageItemsFormController {
+//    Property Injection
+ItemBo itemBO = new ItemBOImpl();
     public AnchorPane root;
     public JFXTextField txtCode;
     public JFXTextField txtDescription;
@@ -75,7 +78,7 @@ public class ManageItemsFormController {
         tblItems.getItems().clear();
         try {
             /*Get all items*/
-            ItemBOImpl itemBO = new ItemBOImpl();
+
             ArrayList<ItemDTO> allItem = itemBO.getAllItem();
             for (ItemDTO item : allItem) {
                 tblItems.getItems().add(new ItemTM(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
@@ -137,7 +140,6 @@ public class ManageItemsFormController {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
 
-            ItemBOImpl itemBO = new ItemBOImpl();
             itemBO.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -178,7 +180,6 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
                 //Save Item
-                ItemBOImpl itemBO = new ItemBOImpl();
                 itemBO.saveItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
 
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
@@ -195,8 +196,6 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
                 /*Update Item*/
-
-                ItemBOImpl itemBO = new ItemBOImpl();
                 itemBO.updateItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
 
             } catch (SQLException e) {
@@ -216,14 +215,11 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        ItemBOImpl itemBO = new ItemBOImpl();
         return itemBO.existItem(code);
     }
 
     private String generateNewId() {
         try {
-
-            ItemBOImpl itemBO = new ItemBOImpl();
             return itemBO.genarateNewId();
 
         } catch (SQLException e) {

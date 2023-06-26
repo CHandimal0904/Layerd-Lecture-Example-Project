@@ -7,7 +7,7 @@ import model.ItemDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ItemBOImpl {
+public class ItemBOImpl implements ItemBo{
     private ItemDAO itemDAO = new ItemDAOImpl();
     public ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException {
         return itemDAO.getAll();
