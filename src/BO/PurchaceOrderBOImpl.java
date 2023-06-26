@@ -14,13 +14,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurchaceOrderBOImpl {
+public class PurchaceOrderBOImpl implements PurrchaseOrderBO{
     ItemDAO itemDAO = new ItemDAOImpl();
     CustomerDAO customerDAO = new CustomerDAOImpl();
     OrderDAO oderDAO = new OderDAOImpl();
     OrderDetailsDao ordeDetailsDAO = new OrdeDetailsDAOImpl();
     QuaryDao quaryDao = new QuaryDaoImpl();
-
+    @Override
     public boolean purchaceOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
 
@@ -63,25 +63,31 @@ public class PurchaceOrderBOImpl {
 //      return false;
 
     }
-
+    @Override
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
     return customerDAO.Search(id);
     }
+    @Override
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
       return itemDAO.Search(code);
     }
+    @Override
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {
         return itemDAO.exist(code);
     }
+    @Override
     public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
        return customerDAO.exist(id);
     }
+    @Override
     public String genareteNewOrderId() throws SQLException, ClassNotFoundException {
        return oderDAO.genarateNewId();
     }
+    @Override
     public ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException {
        return customerDAO.getAll();
     }
+    @Override
     public ArrayList<ItemDTO> loadAllItemCodes() throws SQLException, ClassNotFoundException {
         return itemDAO.getAll();
     }

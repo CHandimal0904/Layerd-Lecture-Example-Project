@@ -1,6 +1,7 @@
 package controller;
 
 import BO.PurchaceOrderBOImpl;
+import BO.PurrchaseOrderBO;
 import DAO.*;
 import DAO.Custom.*;
 import DAO.Custom.Impl.*;
@@ -38,11 +39,8 @@ import java.util.stream.Collectors;
 
 
 public class PlaceOrderFormController {
-//    ItemDAO itemDAO = new ItemDAOImpl();
-//    CustomerDAO customerDAO = new CustomerDAOImpl();
-//    OrderDAO oderDAO = new OderDAOImpl();
-//    OrderDetailsDao ordeDetailsDAO = new OrdeDetailsDAOImpl();
-//    QuaryDao quaryDao = new QuaryDaoImpl();
+//Property Injection
+    PurrchaseOrderBO purchaceOrderBO = new PurchaceOrderBOImpl();
 
     public AnchorPane root;
     public JFXButton btnPlaceOrder;
@@ -109,8 +107,7 @@ public class PlaceOrderFormController {
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-//                        CRUDDAO<CustomerDTO,String> customerDAO = new CustomerDAOImpl();
-                        PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
+
                         CustomerDTO search = purchaceOrderBO.searchCustomer(newValue + " ");
                         txtCustomerName.setText(search.getName());
 
@@ -142,7 +139,7 @@ public class PlaceOrderFormController {
                        //throw new NotFoundException("There is no such item associated with the id " + code);
                     }
 
-                    PurchaceOrderBOImpl purchaceOrderBOFindItem = new PurchaceOrderBOImpl();
+                    PurrchaseOrderBO purchaceOrderBOFindItem = new PurchaceOrderBOImpl();
                     ItemDTO item = purchaceOrderBOFindItem.searchItem(newItemCode + " ");
 
                     txtDescription.setText(item.getDescription());
@@ -184,16 +181,13 @@ public class PlaceOrderFormController {
         loadAllItemCodes();
     }
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
         return purchaceOrderBO.existItem(code);
     }
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
         return purchaceOrderBO.existCustomer(id);
     }
     public String generateNewOrderId() {
         try {
-            PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
             return purchaceOrderBO.genareteNewOrderId();
 
         } catch (SQLException e) {
@@ -205,7 +199,6 @@ public class PlaceOrderFormController {
     }
     private void loadAllCustomerIds() {
         try {
-            PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
             ArrayList<CustomerDTO> all = purchaceOrderBO.getAllCustomers();
             for (CustomerDTO customerDTO : all) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
@@ -218,8 +211,6 @@ public class PlaceOrderFormController {
     }
     private void loadAllItemCodes() {
         try {
-
-            PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
             ArrayList<ItemDTO> all = purchaceOrderBO.loadAllItemCodes();
             for (ItemDTO dto : all) {
                 cmbItemCode.getItems().add(dto.getCode());
@@ -311,7 +302,7 @@ public class PlaceOrderFormController {
         calculateTotal();
     }
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
-        PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
+
         try {
             return purchaceOrderBO.purchaceOrder(orderId,orderDate,customerId,orderDetails);
         } catch (SQLException throwables) {
@@ -323,7 +314,6 @@ public class PlaceOrderFormController {
     }
     public ItemDTO findItem(String code) {
         try {
-            PurchaceOrderBOImpl purchaceOrderBO = new PurchaceOrderBOImpl();
             return purchaceOrderBO.searchItem(code);
 
         } catch (SQLException e) {
