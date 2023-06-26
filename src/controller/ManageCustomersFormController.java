@@ -33,6 +33,8 @@ import java.util.List;
 
 
 public class ManageCustomersFormController {
+    //Property Injection
+    private CustomerBO customerBO = new CustomerBOImpl();
 
     public AnchorPane root;
     public JFXTextField txtCustomerName;
@@ -75,7 +77,7 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         /*Get all customers*/
         try {
-            CustomerBO customerBO = new CustomerBOImpl();
+
             ArrayList<CustomerDTO> allCustomer = customerBO.getAllCustomer();
 
             for (CustomerDTO customer : allCustomer) {
@@ -150,8 +152,6 @@ public class ManageCustomersFormController {
                 if (existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
-
-                CustomerBO customerBO = new CustomerBOImpl();
                 customerBO.saveCustomer(new CustomerDTO(id,name,address));
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
@@ -168,7 +168,6 @@ public class ManageCustomersFormController {
                 if (!existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
-                CustomerBO customerBO = new CustomerBOImpl();
                 customerBO.updateCustomer(new CustomerDTO(id,name,address));
 
             } catch (SQLException e) {
@@ -200,7 +199,6 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-            CustomerBO customerBO = new CustomerBOImpl();
             customerBO.deleteCustomer(id);
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();
